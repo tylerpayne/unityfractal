@@ -28,7 +28,7 @@ More complex geometric forms can be created with very subtle tweaks, the above c
 
 ![complex_param]
 
-[_Fractal Geometry of Nature_]: https://en.wikipedia.org/wiki/The_Fractal_Geometry_of_Nature
+[_The Fractal Geometry of Nature_]: https://en.wikipedia.org/wiki/The_Fractal_Geometry_of_Nature
 [Fractal.cs]: https://github.com/tylerpayne/unityfractal/blob/master/Fractal.cs
 [Generator.cs]: https://github.com/tylerpayne/unityfractal/blob/master/Generator.cs
 [koch_curve]: https://github.com/tylerpayne/unityfractal/blob/master/koch.PNG "Koch Curve"
