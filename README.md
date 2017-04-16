@@ -30,7 +30,7 @@ More complex geometric forms can be created with very subtle tweaks, the above c
 
 [Fractal.cs]: https://github.com/tylerpayne/unityfractal/blob/master/Fractal.cs
 [Generator.cs]: https://github.com/tylerpayne/unityfractal/blob/master/Generator.cs
-[koch_curve]: https://github.com/tylerpayne/unityfractal/blob/master/koch.png "Koch Curve"
-[koch_param]: https://github.com/tylerpayne/unityfractal/blob/master/koch_parameters.png "Koch Param"
-[complex_curve]: https://github.com/tylerpayne/unityfractal/blob/master/complex.png "Complex Curve"
-[complex_param]: https://github.com/tylerpayne/unityfractal/blob/master/complex_parameters.png "Complex Param"
+[koch_curve]: https://github.com/tylerpayne/unityfractal/blob/master/koch.PNG "Koch Curve"
+[koch_param]: https://github.com/tylerpayne/unityfractal/blob/master/koch_parameters.PNG "Koch Param"
+[complex_curve]: https://github.com/tylerpayne/unityfractal/blob/master/complex.PNG "Complex Curve"
+[complex_param]: https://github.com/tylerpayne/unityfractal/blob/master/complex_parameters.PNG "Complex Param"
