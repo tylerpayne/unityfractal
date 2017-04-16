@@ -1,5 +1,5 @@
 # unityfractal
-Fractal Generator for Unity3D
+A fractal generator for Unity3D inspired by Benoit Mandelbrot's initiator-generator approach as described in his [_The Fractal Geometry of Nature_]. These scripts are not intended for production applications. They instantiate a infeasible number of GameObjects. I use these scripts by specifiying parameters, running the scene and then pausing the scene to observe the generated fractal in the Scene viewport. 
 
 # Usage
 Add [Fractal.cs] and [Generator.cs] to your Unity Project's Assets folder. Create two empty GameObjects, add the Generator script to one and Fractal to the other. In the Fractal component, attach the Generator GameObject to the _Generators_ property.
@@ -28,6 +28,7 @@ More complex geometric forms can be created with very subtle tweaks, the above c
 
 ![complex_param]
 
+[_Fractal Geometry of Nature_]: https://en.wikipedia.org/wiki/The_Fractal_Geometry_of_Nature
 [Fractal.cs]: https://github.com/tylerpayne/unityfractal/blob/master/Fractal.cs
 [Generator.cs]: https://github.com/tylerpayne/unityfractal/blob/master/Generator.cs
 [koch_curve]: https://github.com/tylerpayne/unityfractal/blob/master/koch.PNG "Koch Curve"
