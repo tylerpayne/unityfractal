@@ -5,8 +5,8 @@ using UnityEngine;
 public class Fractal : MonoBehaviour
 {
     public float length;
-    public Generator generators;
-
+    public Generator generator;
+      
     public int iteration = 0;
 
     private LineRenderer lineRenderer;
@@ -17,63 +17,77 @@ public class Fractal : MonoBehaviour
         if (lineRenderer == null)
         {
             lineRenderer = gameObject.AddComponent<LineRenderer>();
-            lineRenderer.useWorldSpace = false; 
+            lineRenderer.useWorldSpace = true; 
         }
         if (iteration == 0)
         {
-            Generate();
+            iteration++;
+            GameObject go = new GameObject("Root");
+            go.SetActive(false);
+            Node root = go.AddComponent<Node>();
+
+            root.length = length;
+            root.adjacent = new Node[generator.generators.Length + 2];
+            root.iteration = 0;
+            Generate(root);
+            List<Vector3> positions = new List<Vector3>();
+            Graph.InOrder(root, positions);
+            Debug.Log("Vertex count: " + positions.Count);
+            lineRenderer.positionCount = positions.Count;
+            lineRenderer.SetPositions(positions.ToArray());
+            root.DestroyAll();
         }
     }
 
-    public void Generate()
+    public void Generate(Node n)
     {
-        if (iteration < generators.maxIteration)
+        if (n.iteration < generator.maxIteration)
         {
-            int count = generators.generators.Length;
-            Vector3[] children = new Vector3[count];
+            int count = n.adjacent.Length;
 
-            for (int i = count - 1; i >= 0; i--)
+            Node lastchild = Node.MakeChild(n);
+            lastchild.iteration++;
+            lastchild.transform.position = n.transform.position;
+            lastchild.transform.position += n.transform.forward * n.length;
+            n.adjacent[count - 1] = lastchild;
+
+            for (int i = count - 2; i > 0; i--)
             {
-                Vector3 generator = generators.generators[i];
+                Vector3 gen = generator.generators[i-1];
 
-                Fractal child = Instantiate(this);
+                Node child = Node.MakeChild(n);
                 child.iteration++;
-                child.transform.position = transform.position;
-                child.transform.position += transform.forward * (length * generator.x);
-                child.transform.position += transform.up * (generator.y * length);
-                child.transform.position += transform.right * (generator.z * length);
+                child.transform.position = n.transform.position;
+                child.transform.position += n.transform.forward * (n.length * gen.x);
+                child.transform.position += n.transform.up * (gen.y * n.length);
+                child.transform.position += n.transform.right * (gen.z * n.length);
 
-                Vector3 term;
-                if (i == count - 1)
-                {
-                    term = transform.position + transform.forward.normalized * length;
-                }
-                else
-                {
-                    term = children[i + 1];
-                }
+                Vector3 term = n.adjacent[i + 1].transform.position;
                 child.length = (term - child.transform.position).magnitude;
                 child.transform.LookAt(term);
-                children[i] = child.transform.position;
-                child.gameObject.SetActive(true);
-                child.Generate();
+                
+                n.adjacent[i] = child;
+                child.gameObject.SetActive(false);
             }
 
-            iteration++;
-            Vector3 fvec = children[0] - transform.position;
-            transform.LookAt(children[0]);
-            length = fvec.magnitude;
+            Node n1 = Node.MakeChild(n);
+            n1.iteration++;
+            n1.length = (n.adjacent[1].transform.position - n1.transform.position).magnitude;
+            n1.transform.LookAt(n.adjacent[1].transform.position);
+            n1.gameObject.SetActive(false);
+            n.adjacent[0] = n1;
 
+            for (int i = 0; i < count-1; i++)
+            {
+                Generate(n.adjacent[i]);
+            }
         }
     }
 
     void Update()
     {
-        Vector3 end = new Vector3(0, 0, length);
-        lineRenderer.SetPosition(1, end);
-        lineRenderer.material = generators.material;
-        lineRenderer.startWidth = generators.width;
-        lineRenderer.endWidth = generators.width;
-        Generate();
+        lineRenderer.material = generator.material;
+        lineRenderer.startWidth = generator.width;
+        lineRenderer.endWidth = generator.width;
     }
 }
