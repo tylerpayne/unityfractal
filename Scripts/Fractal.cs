@@ -97,7 +97,7 @@ public class Fractal : MonoBehaviour
                 e /= (float)(count - 1);
                 e /= length;
                 float D = Mathf.Log(N) / Mathf.Log(e);
-                Debug.Log("Fractal Dimension ~=" + -D);
+                Debug.Log("Fractal Dimension ~= " + -D);
             }
 
             for (int i = 0; i < count-1; i++)
