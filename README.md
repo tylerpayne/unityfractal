@@ -1,18 +1,31 @@
 # unityfractal
-A fractal generator for Unity3D inspired by Benoit Mandelbrot's initiator-generator approach as described in his [_The Fractal Geometry of Nature_].
+A fractal generator for Unity3D inspired by Benoit Mandelbrot's initiator-generator scheme as described in his [_The Fractal Geometry of Nature_].
 
 # Usage
-Add [Fractal.cs], [Graph.cs] and [Generator.cs] to your Unity Project's Assets folder. Create two empty GameObjects, add the Generator script to one and Fractal to the other. In the Fractal component, attach the Generator GameObject to the _Generators_ property.
+Move the contents of the Assets folder to the desired locations in your Unity project.
 
-Under the Fractal component the only property of interest is the _Length_ property. The inital line to be subdivided will be _Length_ long, starting from Fractal's position and extending _Length_ units down the forward (z-axis) direction.
+### Basics
+The most basic components are the __Fractal__ and __Generator__. The __Generator__ is essentially an abstract data type, but inherits __MonoBehaviour__ so that you can easily organize various __Generator__ in a scene (See the Example scene). A __Generator__ describes how a generic line segment in a fractal will be divided. This is achieved by creating control points along the line with specific diplacements, then iteratively dividing these newly created line segments in the same way (but in their own local orientation) up to _maxIteration_. 
 
-The Generator component contains the main properties to edit. The Vector3 list _Generators_ defines how many subdivisions the fractal should make per iteration, and the locations of those subdivided points. Note that these Vector3's __DO NOT__ correspond to _(x,y,z)_ coordinates. The _x_ component specifies the position of a generated point as a percentage along the line being divided. The _y_ and _z_ components specify the vertical and horizontal displacement of a generated point from the line to be divided. The values of _y_ and _z_ define the position of the point by moving _y_\*_Length_ in the local up direction and _z_\*_Length_ in the local right direction.
+Add control points along the line by adding elements to the __Vector3__ list _generators_. These control points are positioned a percentage - specified by the _x_ parameter [0-1] - along the line (the length of which is specified later in the Fractal component), and displacements (as percentages of the line length) in the local up and right directions - specified by the _y_ and _z_ paramenters respectively.
 
-The _maxIteration_ value defines how many iterations the Fractal should subdivide. Keep in mind that the number of vertices created will equal (n+1)^m where n=_Generators.Length_ and m=_maxIteration_. Expect delays at startup accordingly.
+Now, on a seperate __GameObject__ with a __Fractal__ component attached, specify the _generator_ property to be your __Generator__ object. Specify the _length_ of the initiator line segment and set _renderPath_ to _true_. The initiator line will have beginning vertex at _transform.localPosition_ and terminating vertex at _transform.localPosition + transform.forward*length_.
 
-_Material_ specifies what material the LineRenderer will draw with.
+Upon playing the scene, __Fractal__ will report its approximate fractal dimension, and its vertex count, the positions of which are made available as a __Vector3__ array in the _path_ property. If _renderPath_ is _true_, a __LineRenderer__ will draw the fractal by connecting each of the vertices.
 
-_Width_ specifies the LineRenderer draw width.
+### Beyond
+There are a few scripts included that make it easy to draw, view and capture complex, animated fractals. Check out the Example project for more details. These scripts are, in summary:
+
+__FreeFlyCamera__ - Attach to a camera script to fly around the scene. Bind whatever keys you like.
+
+__CameraCapture__ - Attach to a camera and press "K" while playing (or bind your own key) to render its view to images of arbitrary resolution. Can also capture a series of images seperated by _burstInterval_ seconds for creating GIFS, etc. During a single run, filenames will increment. Between runs it will overwrite files that collide with the specified path.
+
+__Tracer__ - Attach to any __GameObject__ and specify the _fractal_ property to trace that fractal's path at the specified _speed_.
+
+__TraceReplicator__ - Create copies of __Tracer__ and optionally _randomize_ their starting position along the fractal.
+
+__Cloner__ - Create instances of a __GameObject__ _source_ by either rotating it around a _pivot_, translating it along the _pivot_ or scaling it by the components of _pivot_.
+
 
 # Example
 
