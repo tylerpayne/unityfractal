@@ -8,9 +8,7 @@ public class Fractal : MonoBehaviour
     public bool renderPath;
     public float length;
     public Generator generator;
-      
     public int iteration = 0;
-
     public Vector3[] path;
     
     private LineRenderer lineRenderer;
@@ -27,6 +25,8 @@ public class Fractal : MonoBehaviour
         {
             lineRenderer.enabled = false;
         }
+        lineRenderer.startWidth = generator.width;
+        lineRenderer.endWidth = generator.width;
         if (iteration == 0)
         {  
             iteration++;
@@ -90,7 +90,7 @@ public class Fractal : MonoBehaviour
             {
                 float N = count - 1;
                 float e = 0f;
-                for (int i = 0; i < count - 1; i++)
+                for (int i = 0; i < N; i++)
                 {
                     e += n.adjacent[i].length;
                 }
@@ -109,8 +109,5 @@ public class Fractal : MonoBehaviour
 
     void Update()
     {
-        lineRenderer.material = generator.material;
-        lineRenderer.startWidth = generator.width;
-        lineRenderer.endWidth = generator.width;
     }
 }

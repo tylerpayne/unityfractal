@@ -25,24 +25,12 @@ public class Cloner : MonoBehaviour {
             GameObject clone = Instantiate(source);
             clone.name = source.name + " Clone " + i;
             if (type == cloneType.Translate)
-            {
                 clone.transform.position += pivot * step * i * falloff;
-                
-            }
             else if (type == cloneType.Scale)
-            {
                 clone.transform.localScale += pivot * step * i;
-            }
             else if (type == cloneType.Rotate)
-            {
                 clone.transform.Rotate(pivot, step * i * falloff);
-            }
             clone.SetActive(true);
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

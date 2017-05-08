@@ -46,9 +46,7 @@ public class Graph {
     static int Size(Node n)
     {
         if (n.adjacent.Length == 0)
-        {
             return 1;
-        }
         int size = 1;
         for (int i = 0; i < n.adjacent.Length; i++)
         {

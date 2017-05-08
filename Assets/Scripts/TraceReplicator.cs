@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TraceDrawer : MonoBehaviour
+public class TraceReplicator : MonoBehaviour
 {
 
     public Fractal fractal;
@@ -28,7 +28,7 @@ public class TraceDrawer : MonoBehaviour
             Tracer t = tracers[i];
             for (int j = 0; j < instancesPerTracer; j++)
             {
-                t = Instantiate(t,transform);
+                t = Instantiate(t, transform);
                 t.gameObject.name = "Tracer";
                 if (randomize)
                 {
@@ -45,13 +45,10 @@ public class TraceDrawer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!ready)
+        if (!ready && fractal.path.Length > 0)
         {
-            if (fractal.path.Length > 0)
-            {
-                ready = true;
-                Trace();
-            }
+            ready = true;
+            Trace();
         }
     }
 }
